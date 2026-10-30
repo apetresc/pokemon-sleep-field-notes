@@ -43,7 +43,21 @@ The `apetre.sc` zone is hosted in Route 53. The deployment adds a single `A` rec
 
 Use Tailscale on a client to reach the normal DNS target. A LAN-only client can use a local DNS/hosts override to Newton's LAN address for the same hostname. DNS does not install a route to Tailscale addresses on devices outside the tailnet.
 
-TLS uses Newton's existing **mkcert CA**, matching the other local Traefik services. A client must trust that same CA. The server certificate covers only `sleep.apetre.sc`; the mkcert root private key remains on the Mac, outside the repository and container. Add a separate SNI certificate configuration under the shared proxy's `dynamic/` directory; do not replace another project's certificate or the default TLS store. No public ACME challenge or Internet exposure is required.
+TLS uses the existing **Let's Encrypt `*.apetre.sc` wildcard**, issued and renewed by the homelab Traefik `r53resolver`. Normal clients need no private CA installation or certificate exception. Newton does not create another ACME account or request certificates itself.
+
+`deploy/sync_certificate.py` reads only the matching wildcard pair from the homelab's `traefik_certs` Docker volume. Its temporary reader has a read-only mount, no network and no extra capabilities; other certificates and the ACME account key are not returned. It verifies public trust, hostname, remaining validity and the certificate/key match before switching an atomic `current` symlink and notifying the local proxy. Keys have mode 0600 and are outside the repository/image. Source reads and validation failures preserve the working pair.
+
+A user LaunchAgent at `~/Library/LaunchAgents/sc.apetre.sleep-certificate-sync.plist` runs the sync **weekly and at login**. It checks for a renewed copy; it does not request renewal. The current 90-day certificate normally renews about 30 days before expiry, so weekly checking allows retries. Logs are under `~/Library/Logs/PokemonSleepFieldNotes/` and contain status/hash output only. This job needs Newton's existing `homelab` Docker context/SSH access and Homebrew OpenSSL 3. It does not handle Pokémon Sleep credentials or refresh the collection.
+
+Run a manual certificate check with:
+
+```sh
+python3 deploy/sync_certificate.py \
+  --output "$HOME/src/traefik/certs/pokemon-sleep" \
+  --reload-file "$HOME/src/traefik/dynamic/tls-pokemon-sleep.yml"
+```
+
+The SNI certificate configuration points to `certs/pokemon-sleep/current/cert.pem` and `current/key.pem`. It leaves other projects and the default TLS store intact. No public ingress or AWS credentials in the web container are required. NGINX uses relative redirects because Traefik terminates HTTPS; no redirect should expose its internal HTTP port 8080.
 
 ## Refresh the collection
 

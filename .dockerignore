@@ -3,9 +3,11 @@
 !Dockerfile
 !index.html
 !deploy/
+deploy/**
 !deploy/nginx.conf
 !deploy/entrypoint.sh
 !pokemon-sleep/
+pokemon-sleep/**
 !pokemon-sleep/*.html
 !pokemon-sleep/*.js
 !pokemon-sleep/*.css
