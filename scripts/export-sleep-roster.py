@@ -21,7 +21,7 @@ def sanitize(source, captured_at, areas=None):
         met = record.get('met_at_utc')
         try:
             instant = datetime.datetime.fromisoformat(met) if met else None
-            result['met_date'] = instant.astimezone(ZoneInfo('America/New_York')).date().isoformat() if instant and instant.tzinfo else None
+            result['met_date'] = instant.astimezone(ZoneInfo('America/Toronto')).date().isoformat() if instant and instant.tzinfo else None
         except (ValueError, TypeError):
             result['met_date'] = None
         result['met_area'] = areas.get(str((record.get('raw') or {}).get('capfi')))

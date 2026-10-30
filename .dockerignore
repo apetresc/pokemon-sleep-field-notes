@@ -1,0 +1,27 @@
+# Allowlist the build context, including when local capture files exist.
+**
+!Dockerfile
+!index.html
+!deploy/
+!deploy/nginx.conf
+!deploy/entrypoint.sh
+!pokemon-sleep/
+!pokemon-sleep/*.html
+!pokemon-sleep/*.js
+!pokemon-sleep/*.css
+!pokemon-sleep/*.svg
+!pokemon-sleep/assets/
+!pokemon-sleep/assets/**
+
+# Explicit exclusions override directory re-inclusion semantics in Docker's matcher.
+pokemon-sleep/*.json
+pokemon-sleep/snapshots/
+**/.private/
+**/.env*
+**/*.flows
+**/*.pem
+**/*.key
+**/*.apk
+**/*.apks
+**/*.so
+**/*.dat

@@ -47,11 +47,15 @@ Have the owner approve the temporary proxy/trust setup, then on the Mac/PC:
 umask 077
 mkdir -p .private/ca
 .venv/bin/mitmdump --listen-host YOUR_PRIVATE_LAN_IP --listen-port 8080 \
-  --allow-hosts '^api\.sleep\.pokemon\.co\.jp$' \
+  --allow-hosts '^api\.sleep\.pokemon\.co\.jp:443$' \
   --set confdir=.private/ca --set flow_detail=0 \
   --set 'save_stream_filter=~d ^api\.sleep\.pokemon\.co\.jp$' \
   -w .private/capture.flows
 ```
+
+`allow_hosts` matches `hostname:port`, while the `~d` save filter matches the
+hostname alone. Keep the `:443` in the interception pattern so HTTPS API traffic
+is decrypted instead of being tunneled without inspection.
 
 Replace the private LAN IP, keep the devices on the same trusted Wi-Fi, and keep
 the proxy in a foreground terminal. Allow only the specific listener if the

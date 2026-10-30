@@ -1,4 +1,10 @@
-# Create the user's own Pokémon Sleep Field Notes
+# Adrian's Pokémon Sleep Field Notes
+
+This is Adrian's independently developed fork. Read README.md and docs/self-hosting.md before deployment work. `origin` is apetresc/pokemon-sleep-field-notes; `upstream` is davidzlchen/pokemon-sleep-field-notes. Preserve upstream attribution and review upstream changes selectively.
+
+The production instance is private through Tailscale/LAN. Collection data belongs outside Git in the directory selected by SLEEP_DATA_DIR; use the importer's --output-root option. Keep the checked-in fictional demo intact for tests. Never commit Adrian's actual roster, inventory, history, snapshots, credentials or private capture files. The Docker context is an allowlist, and the web container receives only sanitized runtime data, read-only. See docs/self-hosting.md for the live deployment and refresh workflow. No automatic game login or account capture is installed.
+
+The original template setup guidance follows; completed setup steps do not need repeating for Adrian's existing instance.
 
 Read README.md first. Work toward a verified local Field Notes site and, when the user
 asks to publish, a repository and website owned by that user.

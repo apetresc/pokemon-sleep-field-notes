@@ -1,4 +1,12 @@
-# Pokémon Sleep Field Notes
+# Adrian's Pokémon Sleep Field Notes
+
+This is Adrian's fork of [David Chen's Field Notes](https://github.com/davidzlchen/pokemon-sleep-field-notes), with private self-hosting through OrbStack and Traefik. The code repository keeps the fictional template data; Adrian's actual collection lives separately on the host and is mounted read-only into the running service.
+
+See **[private deployment and refresh instructions](docs/self-hosting.md)** for `sleep.apetre.sc`, persistent storage, backups, and upstream updates. The Docker build contains only static code/artwork and server configuration. It has no game login or capture runtime.
+
+The original template documentation follows. Its Vercel workflow is optional; the deployed personal instance uses Docker Compose.
+
+## Upstream template
 
 Create your own Pokémon Sleep Field Notes: a personal research journal with a searchable
 Pokémon box, ingredients, subskills, XP progress, island milestones, researcher rank,

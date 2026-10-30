@@ -1,0 +1,47 @@
+name: pokemon-sleep
+
+services:
+  web:
+    image: pokemon-sleep-field-notes:local
+    build: .
+    restart: unless-stopped
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=16m
+    volumes:
+      - type: bind
+        source: ${SLEEP_DATA_DIR:?Set SLEEP_DATA_DIR in .env to the sanitized collection directory}
+        target: /data
+        read_only: true
+        bind:
+          create_host_path: false
+    expose: ["8080"]
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8080/pokemon-sleep/history.json"]
+      interval: 30s
+      timeout: 5s
+      start_period: 5s
+      retries: 3
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: edge
+      traefik.http.routers.pokemon-sleep.rule: Host(`${SLEEP_DOMAIN:-sleep.apetre.sc}`)
+      traefik.http.routers.pokemon-sleep.entrypoints: websecure
+      traefik.http.routers.pokemon-sleep.tls: "true"
+      traefik.http.routers.pokemon-sleep.middlewares: pokemon-sleep-private
+      traefik.http.services.pokemon-sleep.loadbalancer.server.port: "8080"
+      # Match the actual connection address; do not trust a supplied X-Forwarded-For.
+      traefik.http.middlewares.pokemon-sleep-private.ipallowlist.sourcerange: 127.0.0.0/8,::1/128,100.64.0.0/10,fd7a:115c:a1e0::/48,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+    networks: [edge]
+
+networks:
+  edge:
+    external: true
+    name: edge

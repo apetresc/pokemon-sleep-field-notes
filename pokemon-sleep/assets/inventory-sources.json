@@ -969,6 +969,16 @@
       "file": "items/dream-shards.webp",
       "url": "https://cdn.raenonx.cc/api/image/pks?format=webp&url=%2Fimages%2Fgeneric%2Fshard.png",
       "sha256": "dd0b3145cc8885b71c21476edcab09e0ece24b3019e431e3abd7738d21240f51"
+    },
+    {
+      "file": "items/item-42.webp",
+      "url": "https://cdn.raenonx.cc/api/image/pks?format=webp&url=%2Fimages%2Fitem%2F42.png",
+      "sha256": "7d4cc8b4d768484fe2a03d3d35d8073b863e38f2b410ca1b2b11b6fb07dc9d05"
+    },
+    {
+      "file": "items/candy-590.webp",
+      "url": "https://cdn.raenonx.cc/api/image/pks?format=webp&url=%2Fimages%2Fcandy%2F590.png",
+      "sha256": "37656e31aacd74189c805d2f7f7a5ec76f5844f536fab78f5c0b98aa3f130d9b"
     }
   ]
 }

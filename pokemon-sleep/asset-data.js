@@ -338,3 +338,12 @@ const subskillAbbreviations = {
     "Dream Shard Bonus": "DSB",
     "Energy Recovery Bonus": "ERB"
 };
+
+// Additional public item labels present in the imported collection.
+Object.assign(sleepAssets.items, {
+    "Croagunk Incense": "items/incense-pokemon-8.webp",
+    "Foongus Incense": "items/incense-pokemon-8.webp",
+    "Pikachu Incense": "items/incense-pokemon-4.webp",
+    "Grass-Type Candy S": "items/item-42.webp",
+    "Foongus Candy": "items/candy-590.webp"
+});
